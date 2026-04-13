@@ -3,86 +3,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Plant Place | Wholesale Order App - Greenvale VIC</title>
+    <title>Plant Place | Wholesale Order System - Greenvale VIC</title>
     <!-- Font Awesome & PDF libs -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        * { margin:0; padding:0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background: #f0f0f0; padding: 1.5rem; }
-        .app-container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 32px; overflow: hidden; box-shadow: 0 20px 35px rgba(0,0,0,0.1); }
-        .brand-header { background: #000000; padding: 1.2rem 2rem; border-bottom: 4px solid #cc0000; display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; }
-        .brand-header h1 { color: white; font-size: 1.8rem; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #eaeaea;
+            padding: 1.5rem;
+        }
+
+        .app-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* header red/black/white */
+        .brand-header {
+            background: #000000;
+            padding: 1.2rem 2rem;
+            border-bottom: 4px solid #cc0000;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .brand-header h1 {
+            color: white;
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
+        }
         .brand-header h1 span { color: #cc0000; }
-        .badge { background: #cc0000; color: white; padding: 0.3rem 1rem; border-radius: 40px; font-size: 0.8rem; font-weight: bold; }
-        .order-grid { display: flex; flex-wrap: wrap; gap: 2rem; padding: 2rem; }
-        .products-panel { flex: 2.5; min-width: 280px; }
-        .info-panel { flex: 1.5; min-width: 280px; background: #fefaf5; border-radius: 24px; padding: 1.2rem; border: 1px solid #f0e2d4; }
-        .section-title { font-size: 1.4rem; font-weight: 700; border-left: 5px solid #cc0000; padding-left: 12px; margin: 0 0 1.2rem 0; }
-        .product-table-wrapper { overflow-x: auto; border-radius: 20px; border: 1px solid #eee; background: white; }
-        .product-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        .product-table th { background: #1e1e1e; color: white; padding: 12px 8px; text-align: left; }
-        .product-table td { padding: 10px 8px; border-bottom: 1px solid #eee; vertical-align: middle; }
-        .price-input { width: 90px; padding: 6px 8px; border-radius: 12px; border: 1px solid #ccc; text-align: right; }
-        .qty-input { width: 80px; padding: 6px 8px; border-radius: 20px; border: 1px solid #cc0000; text-align: center; }
-        .line-total { font-weight: 700; color: #cc0000; background: #fff0e6; padding: 4px 10px; border-radius: 20px; display: inline-block; }
-        .grand-total { background: #000; color: white; padding: 1rem; border-radius: 28px; display: flex; justify-content: space-between; font-size: 1.4rem; font-weight: 800; margin: 1.2rem 0; }
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 5px; }
-        .form-group input, .form-group textarea { width: 100%; padding: 10px 14px; border-radius: 28px; border: 1px solid #ccc; }
-        .cc-row { display: flex; gap: 12px; flex-wrap: wrap; }
-        .btn-red { background: #cc0000; border: none; color: white; font-weight: bold; padding: 12px 20px; border-radius: 40px; cursor: pointer; width: 100%; margin-top: 8px; font-size: 1rem; }
-        .btn-red:hover { background: #990000; }
-        .btn-outline { background: white; border: 2px solid #cc0000; color: #cc0000; font-weight: bold; padding: 10px 16px; border-radius: 40px; cursor: pointer; margin-right: 10px; }
-        .flex-btns { display: flex; gap: 12px; margin-top: 12px; }
-        footer { background: #000; color: #aaa; text-align: center; padding: 1rem; font-size: 0.75rem; }
-        @media (max-width: 780px) { .order-grid { flex-direction: column; } }
+        .brand-header p {
+            color: #dddddd;
+            font-size: 0.85rem;
+        }
+        .badge {
+            background: #cc0000;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        /* two column layout */
+        .order-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 2rem;
+        }
+        .products-panel {
+            flex: 2.5;
+            min-width: 320px;
+        }
+        .info-panel {
+            flex: 1.3;
+            min-width: 280px;
+            background: #fefaf5;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            border: 1px solid #f0e2d4;
+            align-self: start;
+            position: sticky;
+            top: 20px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-left: 5px solid #cc0000;
+            padding-left: 12px;
+            margin: 0 0 1.2rem 0;
+            color: #111;
+        }
+
+        /* table */
+        .product-table-wrapper {
+            overflow-x: auto;
+            border-radius: 20px;
+            border: 1px solid #eee;
+            background: white;
+            max-height: 65vh;
+            overflow-y: auto;
+        }
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        .product-table th {
+            background: #1e1e1e;
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+        .product-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+        .price-input {
+            width: 90px;
+            padding: 6px 8px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            text-align: right;
+            font-weight: 500;
+        }
+        .unit-select {
+            width: 75px;
+            padding: 6px 4px;
+            border-radius: 20px;
+            border: 1px solid #cc0000;
+            background: white;
+            font-weight: 500;
+            text-align: center;
+        }
+        .line-total {
+            font-weight: 700;
+            color: #cc0000;
+            background: #fff0e6;
+            padding: 4px 10px;
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 0.85rem;
+        }
+        .grand-total {
+            background: #000;
+            color: white;
+            padding: 1rem;
+            border-radius: 28px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin: 1.2rem 0;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #222;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 40px;
+            border: 1px solid #ccc;
+            background: white;
+        }
+        .cc-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .cc-row .form-group {
+            flex: 1;
+        }
+        .btn-red {
+            background: #cc0000;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 40px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            margin-top: 8px;
+            transition: 0.2s;
+        }
+        .btn-red:hover {
+            background: #990000;
+        }
+        .btn-outline {
+            background: white;
+            border: 2px solid #cc0000;
+            color: #cc0000;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .flex-btns {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        footer {
+            background: #000;
+            color: #aaa;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.75rem;
+        }
+        @media (max-width: 800px) {
+            .order-grid { flex-direction: column; }
+            .info-panel { position: static; }
+        }
     </style>
 </head>
 <body>
 <div class="app-container">
     <div class="brand-header">
-        <div><h1>PLANT <span>PLACE</span></h1><p>Wholesale Nursery • Greenvale VIC • Trade pricing (No GST)</p></div>
-        <div class="badge"><i class="fas fa-truck"></i> Direct delivery</div>
+        <div>
+            <h1>PLANT <span>PLACE</span></h1>
+            <p>Wholesale Nursery • Greenvale VIC • Trade pricing (No GST)</p>
+        </div>
+        <div class="badge"><i class="fas fa-truck"></i> Direct site delivery</div>
     </div>
+
     <div class="order-grid">
-        <!-- Left: product table -->
+        <!-- LEFT: FULL PRODUCT LIST (44 items) -->
         <div class="products-panel">
-            <div class="section-title"><i class="fas fa-seedling"></i> Wholesale catalogue – edit price & units</div>
+            <div class="section-title"><i class="fas fa-seedling"></i> Complete wholesale catalogue – edit price & units</div>
             <div class="product-table-wrapper">
                 <table class="product-table" id="productTable">
-                    <thead><tr><th>Product (botanical / common)</th><th>Unit price ($)<br><span style="font-weight:normal;">(editable)</span></th><th>Units required<br><span style="font-weight:normal;">(qty)</span></th><th>Line total (AUD)</th></tr></thead>
+                    <thead>
+                        <tr><th>Product (botanical / common)</th><th>Unit price ($)<br><span style="font-weight:normal;">(editable)</span></th><th>Units required<br><span style="font-weight:normal;">(dropdown)</span></th><th>Line total</th> </tr>
+                    </thead>
                     <tbody id="productTableBody"></tbody>
                 </table>
             </div>
-            <div class="grand-total"><span>📦 ORDER TOTAL (no GST):</span> <span id="totalAmount">$0.00</span></div>
+            <div class="grand-total">
+                <span>📦 ORDER TOTAL (no GST):</span>
+                <span id="totalAmount">$0.00</span>
+            </div>
             <div class="flex-btns">
-                <button class="btn-outline" id="resetQuantitiesBtn"><i class="fas fa-undo-alt"></i> Reset quantities</button>
+                <button class="btn-outline" id="resetQtyBtn"><i class="fas fa-undo-alt"></i> Reset all quantities</button>
                 <button class="btn-outline" id="resetPricesBtn"><i class="fas fa-dollar-sign"></i> Reset default prices</button>
             </div>
         </div>
 
-        <!-- Right: buyer & payment -->
+        <!-- RIGHT: BUYER + PAYMENT + PDF -->
         <div class="info-panel">
             <div class="section-title"><i class="fas fa-file-invoice"></i> Order details</div>
-            <div class="form-group"><label><i class="fas fa-user"></i> Buyer full name *</label><input type="text" id="buyerName" value="Michael Chen"></div>
-            <div class="form-group"><label><i class="fas fa-building"></i> Company name</label><input type="text" id="companyName" value="Green Valley Landscapes"></div>
-            <div class="form-group"><label><i class="fas fa-map-marker-alt"></i> Delivery address *</label><textarea id="deliveryAddress" rows="2">25 Wattle Crescent, Greenvale VIC 3059</textarea></div>
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Buyer full name *</label>
+                <input type="text" id="buyerName" value="Michael Chen">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-building"></i> Company name</label>
+                <input type="text" id="companyName" value="Green Valley Landscapes">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-map-marker-alt"></i> Delivery address *</label>
+                <textarea id="deliveryAddress" rows="2">25 Wattle Crescent, Greenvale VIC 3059</textarea>
+            </div>
             <hr style="margin: 1rem 0;">
-            <div class="section-title" style="font-size:1.1rem;"><i class="fas fa-credit-card"></i> Payment (demo)</div>
+            <div class="section-title" style="font-size:1rem;"><i class="fas fa-credit-card"></i> Payment (demo)</div>
             <div class="form-group"><label>Cardholder name</label><input type="text" id="cardName" value="MICHAEL CHEN"></div>
             <div class="form-group"><label>Card number</label><input type="text" id="cardNumber" value="4242 4242 4242 4242"></div>
-            <div class="cc-row"><div class="form-group"><label>Expiry (MM/YY)</label><input type="text" id="expiry" value="08/28"></div><div class="form-group"><label>CVV</label><input type="text" id="cvv" value="123"></div></div>
+            <div class="cc-row">
+                <div class="form-group"><label>Expiry (MM/YY)</label><input type="text" id="expiry" value="08/28"></div>
+                <div class="form-group"><label>CVV</label><input type="text" id="cvv" value="123"></div>
+            </div>
             <button class="btn-red" id="generatePdfBtn"><i class="fas fa-file-pdf"></i> 📄 Generate PDF order summary</button>
-            <p class="pdf-note" style="margin-top:12px; font-size:0.7rem;">PDF includes all ordered items, buyer info, total (no GST). No real charge.</p>
+            <p class="pdf-note" style="margin-top:12px; font-size:0.7rem; color:#666;">PDF includes all ordered items (qty > 0), buyer info & total (no GST). No real charge.</p>
         </div>
     </div>
-    <footer><i class="fas fa-leaf"></i> Plant Place – Greenvale VIC | Wholesale only | Prices exclude GST</footer>
+    <footer><i class="fas fa-leaf"></i> Plant Place – Greenvale VIC | Wholesale only | Prices exclude GST | Trade terms apply</footer>
 </div>
 
 <script>
-    // ---------- PRODUCT DATABASE (Victoria wholesale range) ----------
+    // --------------------------------------------------------------
+    // FULL PRODUCT LIST (44 items, Victoria wholesale range)
+    // --------------------------------------------------------------
     const productCatalog = [
         { name: "Eucalyptus leucoxylon – Yellow Gum", defaultPrice: 45.50 },
         { name: "Acer palmatum 'Atropurpureum' – Japanese Maple", defaultPrice: 89.00 },
@@ -130,9 +336,11 @@
         { name: "Olea europaea 'Swan Hill' – Fruitless Olive", defaultPrice: 94.00 }
     ];
 
+    // State arrays
     let productPrices = productCatalog.map(p => p.defaultPrice);
     let productQuantities = productCatalog.map(() => 0);
 
+    // Helper: render full table
     function renderTable() {
         const tbody = document.getElementById("productTableBody");
         tbody.innerHTML = "";
@@ -143,9 +351,12 @@
             const qty = productQuantities[i];
             const lineTotal = price * qty;
             total += lineTotal;
+
             const row = tbody.insertRow();
-            row.insertCell(0).innerHTML = `<strong>${item.name}</strong>`;
-            // price cell
+            // Product name
+            const nameCell = row.insertCell(0);
+            nameCell.innerHTML = `<strong>${item.name}</strong>`;
+            // Editable price
             const priceCell = row.insertCell(1);
             const priceInput = document.createElement("input");
             priceInput.type = "number";
@@ -153,28 +364,30 @@
             priceInput.value = price.toFixed(2);
             priceInput.classList.add("price-input");
             priceInput.addEventListener("change", ((idx) => (e) => {
-                let v = parseFloat(e.target.value);
-                if (isNaN(v) || v < 0) v = 0;
-                productPrices[idx] = v;
+                let newVal = parseFloat(e.target.value);
+                if (isNaN(newVal) || newVal < 0) newVal = 0;
+                productPrices[idx] = newVal;
                 renderTable();
-            }))(i);
+            }))(i));
             priceCell.appendChild(priceInput);
-            // qty cell (units required)
+            // Units required: DROPDOWN (0 to 99)
             const qtyCell = row.insertCell(2);
-            const qtyInput = document.createElement("input");
-            qtyInput.type = "number";
-            qtyInput.min = "0";
-            qtyInput.step = "1";
-            qtyInput.value = qty;
-            qtyInput.classList.add("qty-input");
-            qtyInput.addEventListener("change", ((idx) => (e) => {
-                let v = parseInt(e.target.value, 10);
-                if (isNaN(v) || v < 0) v = 0;
-                productQuantities[idx] = v;
+            const select = document.createElement("select");
+            select.classList.add("unit-select");
+            for (let u = 0; u <= 99; u++) {
+                const option = document.createElement("option");
+                option.value = u;
+                option.textContent = u;
+                if (u === qty) option.selected = true;
+                select.appendChild(option);
+            }
+            select.addEventListener("change", ((idx) => (e) => {
+                const newQty = parseInt(e.target.value, 10);
+                productQuantities[idx] = newQty;
                 renderTable();
-            }))(i);
-            qtyCell.appendChild(qtyInput);
-            // line total
+            }))(i));
+            qtyCell.appendChild(select);
+            // Line total
             const lineCell = row.insertCell(3);
             const span = document.createElement("span");
             span.className = "line-total";
@@ -184,8 +397,14 @@
         document.getElementById("totalAmount").innerText = `$${total.toFixed(2)}`;
     }
 
-    function resetQuantities() { productQuantities.fill(0); renderTable(); }
-    function resetPrices() { productPrices = productCatalog.map(p => p.defaultPrice); renderTable(); }
+    function resetQuantities() {
+        productQuantities.fill(0);
+        renderTable();
+    }
+    function resetPrices() {
+        productPrices = productCatalog.map(p => p.defaultPrice);
+        renderTable();
+    }
 
     // PDF generation (robust)
     async function generatePDF() {
@@ -193,6 +412,8 @@
         const company = document.getElementById("companyName").value.trim() || "—";
         const address = document.getElementById("deliveryAddress").value.trim() || "No address";
         const cardHolder = document.getElementById("cardName").value.trim() || "N/A";
+        
+        // collect only items with quantity > 0
         const orderedItems = [];
         for (let i = 0; i < productCatalog.length; i++) {
             if (productQuantities[i] > 0) {
@@ -205,39 +426,43 @@
             }
         }
         const totalAmt = orderedItems.reduce((s, it) => s + it.lineTotal, 0);
-        // create a temporary div for rendering
-        const tempDiv = document.createElement("div");
-        tempDiv.style.position = "absolute";
-        tempDiv.style.left = "-9999px";
-        tempDiv.style.top = "0";
-        tempDiv.style.backgroundColor = "white";
-        tempDiv.style.padding = "20px";
-        tempDiv.style.width = "800px";
-        tempDiv.style.fontFamily = "sans-serif";
-        tempDiv.innerHTML = `
-            <div style="border-bottom: 4px solid #cc0000; margin-bottom: 20px;">
-                <h1 style="color:#000;">PLANT <span style="color:#cc0000;">PLACE</span></h1>
-                <p>Wholesale Nursery – Greenvale VIC | Order summary (No GST)</p>
+        
+        // create hidden div for PDF rendering
+        const pdfDiv = document.createElement("div");
+        pdfDiv.style.position = "absolute";
+        pdfDiv.style.left = "-9999px";
+        pdfDiv.style.top = "0";
+        pdfDiv.style.backgroundColor = "white";
+        pdfDiv.style.padding = "24px";
+        pdfDiv.style.width = "800px";
+        pdfDiv.style.fontFamily = "sans-serif";
+        pdfDiv.innerHTML = `
+            <div style="border-bottom: 4px solid #cc0000; margin-bottom: 20px; display:flex; justify-content:space-between;">
+                <div>
+                    <h1 style="color:#000; margin:0;">PLANT <span style="color:#cc0000;">PLACE</span></h1>
+                    <p style="color:#555;">Wholesale Nursery – Greenvale VIC | Order summary (No GST)</p>
+                </div>
+                <div style="text-align:right;"><strong>Date:</strong> ${new Date().toLocaleDateString()}<br><strong>Order ID:</strong> PP-${Math.floor(Math.random()*10000)}</div>
             </div>
-            <div style="display:flex; justify-content:space-between;">
+            <div style="display:flex; justify-content:space-between; margin: 15px 0;">
                 <div><strong>Buyer:</strong> ${buyer}<br><strong>Company:</strong> ${company}<br><strong>Delivery:</strong> ${address}</div>
-                <div><strong>Date:</strong> ${new Date().toLocaleDateString()}<br><strong>Order ID:</strong> PP-${Math.floor(Math.random()*10000)}</div>
+                <div><strong>Cardholder:</strong> ${cardHolder}<br><strong>Payment:</strong> Credit Card (demo)</div>
             </div>
             <hr>
-            <h3>Ordered products</h3>
-            <table style="width:100%; border-collapse:collapse;">
-                <thead><tr style="background:#111; color:white;"><th style="padding:6px;">Product</th><th>Unit $</th><th>Qty</th><th>Line $</th></tr></thead>
+            <h3>Ordered items</h3>
+            <table style="width:100%; border-collapse:collapse; margin-top:10px;">
+                <thead><tr style="background:#111; color:white;"><th style="padding:8px; text-align:left;">Product</th><th>Unit $</th><th>Qty</th><th>Line $</th></tr></thead>
                 <tbody>
-                    ${orderedItems.map(it => `<tr><td style="padding:6px;">${it.name}</td><td style="text-align:center;">$${it.price.toFixed(2)}</td><td style="text-align:center;">${it.qty}</td><td style="text-align:right;">$${it.lineTotal.toFixed(2)}</td></tr>`).join("")}
-                    ${orderedItems.length === 0 ? '<tr><td colspan="4" style="padding:12px;text-align:center;">⚠️ No items selected. Please add quantities.</td></tr>' : ''}
+                    ${orderedItems.map(it => `<tr style="border-bottom:1px solid #ddd;"><td style="padding:8px;">${it.name}</td><td style="text-align:center;">$${it.price.toFixed(2)}</td><td style="text-align:center;">${it.qty}</td><td style="text-align:right;">$${it.lineTotal.toFixed(2)}</td></tr>`).join("")}
+                    ${orderedItems.length === 0 ? '<tr><td colspan="4" style="padding:16px;text-align:center;">⚠️ No items selected. Add quantities before generating PDF.</td></tr>' : ''}
                 </tbody>
             </table>
-            <div style="margin-top:20px; text-align:right; font-size:1.5rem; font-weight:bold; background:#f4f4f4; padding:10px;">TOTAL (no GST): $${totalAmt.toFixed(2)}</div>
-            <div style="margin-top:30px; font-size:0.7rem; color:#666;">Payment method: Credit Card demo — Cardholder: ${cardHolder} | This is a proforma summary, no actual charge.</div>
+            <div style="margin-top:20px; text-align:right; font-size:1.5rem; font-weight:bold; background:#f4f4f4; padding:12px; border-radius:12px;">TOTAL (no GST): $${totalAmt.toFixed(2)}</div>
+            <div style="margin-top:25px; font-size:0.7rem; color:#666; text-align:center;">This is a trade proforma – no actual charge. Plant Place, Greenvale VIC</div>
         `;
-        document.body.appendChild(tempDiv);
+        document.body.appendChild(pdfDiv);
         try {
-            const canvas = await html2canvas(tempDiv, { scale: 2, backgroundColor: '#ffffff' });
+            const canvas = await html2canvas(pdfDiv, { scale: 2, backgroundColor: '#ffffff' });
             const imgData = canvas.toDataURL('image/png');
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF('p', 'mm', 'a4');
@@ -246,21 +471,24 @@
             pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
             pdf.save(`PlantPlace_Order_${buyer.replace(/\s/g,'_')}.pdf`);
         } catch (err) {
-            alert("PDF generation error: " + err.message + ". Please ensure you have an internet connection for libraries.");
+            alert("PDF error: " + err.message + ". Please check internet connection.");
         } finally {
-            document.body.removeChild(tempDiv);
+            document.body.removeChild(pdfDiv);
         }
     }
 
-    document.getElementById("resetQuantitiesBtn").addEventListener("click", resetQuantities);
+    // Event listeners
+    document.getElementById("resetQtyBtn").addEventListener("click", resetQuantities);
     document.getElementById("resetPricesBtn").addEventListener("click", resetPrices);
     document.getElementById("generatePdfBtn").addEventListener("click", async () => {
         if (!document.getElementById("buyerName").value.trim()) {
-            alert("Please enter buyer name before generating PDF.");
+            alert("Please enter buyer name.");
             return;
         }
         await generatePDF();
     });
+    
+    // initial render
     renderTable();
 </script>
 </body>
